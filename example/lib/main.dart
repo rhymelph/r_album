@@ -153,10 +153,11 @@ class _MyAppState extends State<MyApp> {
             _isSaving = true;
           });
           if (_file != null) {
-            if(await canReadStorage()){
-
+            if (await canReadStorage()) {
               await RAlbum.saveAlbum(
-                  filePaths: [_file.path], albumName: "test_album_saver2");
+                "test_album_saver2",
+                [_file.path],
+              );
               setState(() {
                 _isSaving = false;
               });
@@ -170,8 +171,9 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+
   Future<bool> canReadStorage() async {
-    if(Platform.isIOS) return true;
+    if (Platform.isIOS) return true;
     var status = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.storage);
     if (status != PermissionStatus.granted) {
@@ -196,16 +198,15 @@ class _MyAppState extends State<MyApp> {
         textColor: Colors.white,
         child: Text("Create a album named MyTestAlbum"),
         onPressed: () async {
-          if(await canReadStorage()){
+          if (await canReadStorage()) {
             setState(() {
               _isSaving = true;
             });
-            await RAlbum.createAlbum(albumName: "MyTestAlbum");
+            await RAlbum.createAlbum("MyTestAlbum");
             setState(() {
               _isSaving = false;
             });
           }
-
         },
       ),
     );

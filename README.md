@@ -1,14 +1,34 @@
 # r_album
+[![pub package](https://img.shields.io/pub/v/r_album.svg)](https://pub.dartlang.org/packages/r_album)
 
-A new Flutter plugin.
+![](screen/r_album.png)
 
-## Getting Started
+[中文](README_CN.md)
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+A  Flutter Plugin about image or video file save in album ,support Android and IOS.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+
+## How to Use
+
+- 1.add this in `pubspec.yaml`.
+```dart
+dependencies:
+  r_album: lastVersion
+
+```
+
+- 2.import it
+```dart
+import 'package:r_album/r_album.dart';
+```
+
+- 3.create a new album.
+···dart
+await RAlbum.createAlbum("your album name");
+```
+
+- 4.save image or video file in album, use it.
+```dart
+await RAlbum.saveAlbum("your album name",["file1","file2",...]);
+```
+
