@@ -10,6 +10,7 @@ Flutter 图片或者视频保存到相册插件，支持Android和IOS.
 ## 如何使用
 
 - 1.在`./pubspec.yaml`文件下添加插件
+
 ```dart
 dependencies:
   r_album: lastVersion
@@ -17,16 +18,19 @@ dependencies:
 ```
 
 - 2.导入包
+
 ```dart
 import 'package:r_album/r_album.dart';
 ```
 
 - 3.创建专辑
-···dart
+
+```dart
 await RAlbum.createAlbum("你的专辑名字");
 ```
 
 - 4.将图片或视频添加到专辑中（添加后即可在系统相册中找到）
+
 ```dart
 await RAlbum.saveAlbum("你的专辑名",["文件路径1","文件路径2",...]);
 ```
