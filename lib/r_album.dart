@@ -7,8 +7,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class RAlbum {
-  static const MethodChannel _channel = const MethodChannel('com.rhyme_lph/r_album');
-
+  static const MethodChannel _channel =
+      const MethodChannel('com.rhyme_lph/r_album');
 
   /// create one album
   static Future createAlbum(String albumName) {
