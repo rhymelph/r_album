@@ -26,7 +26,7 @@ import 'package:r_album/r_album.dart';
 
 - 3.create a new album.
 
-···dart
+```dart
 await RAlbum.createAlbum("your album name");
 ```
 
