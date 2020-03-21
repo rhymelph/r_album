@@ -62,7 +62,7 @@ public class RAlbumPlugin : FlutterPlugin, MethodCallHandler {
             return
         }
         thread {
-            val rootFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), albumName)
+            val rootFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), albumName)
             if (!rootFile.exists()) {
                 rootFile.mkdirs()
             }
@@ -105,7 +105,7 @@ public class RAlbumPlugin : FlutterPlugin, MethodCallHandler {
             return
         }
         thread {
-            val rootFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), albumName)
+            val rootFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), albumName)
             if (!rootFile.exists()) {
                 rootFile.mkdirs()
             }
