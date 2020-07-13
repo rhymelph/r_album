@@ -70,10 +70,14 @@ public class RAlbumPlugin : FlutterPlugin, MethodCallHandler {
             var resultPaths = mutableListOf<String>()
 
             for (path in filePaths) {
-                val suffix: String = path.substring(path.lastIndexOf(".") + 1)
-                val itemFile = File(rootFile, "${System.currentTimeMillis()}.$suffix")
+                val fileName: String = if (path.lastIndexOf('.') == -1) {
+                    "${System.currentTimeMillis()}"
+                } else {
+                    val suffix: String = path.substring(path.lastIndexOf(".") + 1)
+                    "${System.currentTimeMillis()}.$suffix"
+                }
+                val itemFile = File(rootFile, fileName)
                 if (!itemFile.exists()) itemFile.createNewFile()
-
                 val outPut = itemFile.outputStream()
                 val inPut = FileInputStream(path)
                 val buf = ByteArray(1024)
@@ -117,6 +121,6 @@ public class RAlbumPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         context = null
-        
+
     }
 }
