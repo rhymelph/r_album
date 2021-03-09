@@ -1,3 +1,6 @@
+## 0.1.3
+
+* fix save album image not permission(Android).
 ## 0.1.2
 
 * fix save album image not permission(IOS).

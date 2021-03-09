@@ -16,6 +16,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import java.io.File
 import java.io.FileInputStream
+import java.lang.Exception
 import kotlin.concurrent.thread
 
 /** RAlbumPlugin */
@@ -67,37 +68,43 @@ public class RAlbumPlugin : FlutterPlugin, MethodCallHandler {
                 rootFile.mkdirs()
             }
 
-            var resultPaths = mutableListOf<String>()
+            val resultPaths = mutableListOf<String>()
 
-            for (path in filePaths) {
-                val fileName: String = if (path.lastIndexOf('.') == -1) {
-                    "${System.currentTimeMillis()}"
-                } else {
-                    val suffix: String = path.substring(path.lastIndexOf(".") + 1)
-                    "${System.currentTimeMillis()}.$suffix"
-                }
-                val itemFile = File(rootFile, fileName)
-                if (!itemFile.exists()) itemFile.createNewFile()
-                val outPut = itemFile.outputStream()
-                val inPut = FileInputStream(path)
-                val buf = ByteArray(1024)
-                var len = 0
-                while (true) {
-                    len = inPut.read(buf)
-                    if (len == -1) break
-                    outPut.write(buf, 0, len)
-                }
-                outPut.flush()
-                outPut.close()
+            try {
+                for (path in filePaths) {
+                    val fileName: String = if (path.lastIndexOf('.') == -1) {
+                        "${System.currentTimeMillis()}"
+                    } else {
+                        val suffix: String = path.substring(path.lastIndexOf(".") + 1)
+                        "${System.currentTimeMillis()}.$suffix"
+                    }
+                    val itemFile = File(rootFile, fileName)
+                    if (!itemFile.exists()) itemFile.createNewFile()
+                    val outPut = itemFile.outputStream()
+                    val inPut = FileInputStream(path)
+                    val buf = ByteArray(1024)
+                    var len = 0
+                    while (true) {
+                        len = inPut.read(buf)
+                        if (len == -1) break
+                        outPut.write(buf, 0, len)
+                    }
+                    outPut.flush()
+                    outPut.close()
 
-                inPut.close()
-                resultPaths.add(itemFile.absolutePath)
+                    inPut.close()
+                    resultPaths.add(itemFile.absolutePath)
+                    handler.post {
+                        context!!.sendBroadcast(Intent(ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(itemFile)))
+                    }
+                }
                 handler.post {
-                    context!!.sendBroadcast(Intent(ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(itemFile)))
+                    result.success(true)
                 }
-            }
-            handler.post {
-                result.success(resultPaths)
+            } catch (e: Exception) {
+                handler.post {
+                    result.success(false)
+                }
             }
         }
     }
@@ -105,7 +112,7 @@ public class RAlbumPlugin : FlutterPlugin, MethodCallHandler {
     private fun createAlbum(call: MethodCall, result: Result) {
         val albumName = call.argument<String>("albumName")
         if (albumName == null) {
-            result.error("100", "albumName is not null", null)
+            result.success(false)
             return
         }
         thread {
@@ -114,7 +121,7 @@ public class RAlbumPlugin : FlutterPlugin, MethodCallHandler {
                 rootFile.mkdirs()
             }
             handler.post {
-                result.success(rootFile.absolutePath)
+                result.success(true)
             }
         }
     }
