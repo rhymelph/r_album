@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Add Photo</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -28,11 +30,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>"example"需要您的同意,才能访问相机</string>
+	<string>&quot;example&quot;需要您的同意,才能访问相机</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>"example"需要您的同意,才能访问麦克风</string>
+	<string>&quot;example&quot;需要您的同意,才能访问麦克风</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>"example"需要您的同意,才能访问相册</string>
+	<string>&quot;example&quot;需要您的同意,才能访问相册</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

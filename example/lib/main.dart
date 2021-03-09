@@ -154,10 +154,11 @@ class _MyAppState extends State<MyApp> {
           });
           if (_file != null) {
             if (await canReadStorage()) {
-              await RAlbum.saveAlbum(
-                "test_album_saver2",
-                [_file.path],
+              bool isSuccess = await RAlbum.saveAlbum(
+                "MyTestAlbum",
+                [_file.path,_file.path],
               );
+              print('保存图片到相册是否成功：$isSuccess');
               setState(() {
                 _isSaving = false;
               });
@@ -202,7 +203,8 @@ class _MyAppState extends State<MyApp> {
             setState(() {
               _isSaving = true;
             });
-            await RAlbum.createAlbum("MyTestAlbum");
+            bool isSuccess = await RAlbum.createAlbum("MyTestAlbum");
+            print('创建相册是否成功：$isSuccess');
             setState(() {
               _isSaving = false;
             });

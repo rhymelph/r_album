@@ -27,12 +27,12 @@ import 'package:r_album/r_album.dart';
 - 3.create a new album.
 
 ```dart
-await RAlbum.createAlbum("your album name");
+bool isSuccess = await RAlbum.createAlbum("your album name");
 ```
 
 - 4.save image or video file in album, use it.
 
 ```dart
-await RAlbum.saveAlbum("your album name",["file1","file2",...]);
+bool isSuccess = await RAlbum.saveAlbum("your album name",["file1","file2",...]);
 ```
 
