@@ -156,7 +156,7 @@ class _MyAppState extends State<MyApp> {
             if (await canReadStorage()) {
               bool isSuccess = await RAlbum.saveAlbum(
                 "MyTestAlbum",
-                [_file.path,_file.path],
+                [_file.path, _file.path],
               );
               print('保存图片到相册是否成功：$isSuccess');
               setState(() {

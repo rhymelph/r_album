@@ -1,3 +1,7 @@
+## 0.1.4
+
+* null safety.
+
 ## 0.1.3
 
 * fix save album image not permission(Android).
