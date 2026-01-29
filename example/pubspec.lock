@@ -337,11 +337,12 @@ packages:
     source: hosted
     version: "2.1.8"
   r_album:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: r_album
+      sha256: d0f9a28d8f2b2070f8684fd04a56ac32a8750958655009ca121f2253b1228a5e
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "0.1.4"
   sky_engine:
     dependency: transitive
