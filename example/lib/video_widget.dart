@@ -6,14 +6,14 @@ import 'package:video_player/video_player.dart';
 class VideoWidget extends StatefulWidget {
   final File file;
 
-  const VideoWidget({Key key, this.file}) : super(key: key);
+  const VideoWidget({Key? key, required this.file}) : super(key: key);
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return _controller.value.initialized
+    return _controller.value.isInitialized
         ? Stack(
             children: <Widget>[
               AspectRatio(

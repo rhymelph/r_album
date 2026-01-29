@@ -13,7 +13,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
 import java.io.File
 import java.io.FileInputStream
 import java.lang.Exception
@@ -30,16 +29,6 @@ public class RAlbumPlugin : FlutterPlugin, MethodCallHandler {
         val channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), methodName)
         channel.setMethodCallHandler(RAlbumPlugin())
 
-    }
-
-    companion object {
-        @JvmStatic
-        fun registerWith(registrar: Registrar) {
-            context = registrar.activity()
-
-            val channel = MethodChannel(registrar.messenger(), methodName)
-            channel.setMethodCallHandler(RAlbumPlugin())
-        }
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {

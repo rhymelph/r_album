@@ -1,11 +1,11 @@
 name: r_album
 description: A Flutter Plugin about image or video file save in album ,support Android and IOS.
-version: 0.1.4
+version: 0.1.5
 homepage: https://github.com/rhymelph/r_album
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.12.0"
+  sdk: ^3.4.3
+
 
 dependencies:
   flutter:

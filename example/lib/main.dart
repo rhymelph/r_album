@@ -14,10 +14,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  File _file;
-  bool _isSaving;
+  File? _file;
+  bool? _isSaving;
 
-  bool isClickVideo;
+  bool? isClickVideo;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +46,12 @@ class _MyAppState extends State<MyApp> {
       margin: EdgeInsets.all(16),
       height: 300.0,
       child: isClickVideo != null
-          ? isClickVideo
+          ? isClickVideo!
               ? VideoWidget(
-                  file: _file,
+                  file: _file!,
                 )
               : Image.file(
-                  _file,
+                  _file!,
                   fit: BoxFit.fill,
                 )
           : Center(
@@ -75,11 +75,11 @@ class _MyAppState extends State<MyApp> {
             icon: Icon(Icons.camera_alt),
             onPressed: () async {
               var image =
-                  await ImagePicker.pickImage(source: ImageSource.camera);
+                  await ImagePicker().pickImage(source: ImageSource.camera);
               if (image != null) {
                 isClickVideo = false;
                 setState(() {
-                  _file = image;
+                  _file = File(image.path);
                 });
               }
             },
@@ -89,11 +89,11 @@ class _MyAppState extends State<MyApp> {
             icon: Icon(Icons.folder),
             onPressed: () async {
               var image =
-                  await ImagePicker.pickImage(source: ImageSource.gallery);
+                  await ImagePicker().pickImage(source: ImageSource.gallery);
               if (image != null) {
                 isClickVideo = false;
                 setState(() {
-                  _file = image;
+                  _file = File(image.path);
                 });
               }
             },
@@ -113,11 +113,11 @@ class _MyAppState extends State<MyApp> {
             icon: Icon(Icons.videocam),
             onPressed: () async {
               var video =
-                  await ImagePicker.pickVideo(source: ImageSource.camera);
+                  await ImagePicker().pickVideo(source: ImageSource.camera);
               if (video != null) {
                 isClickVideo = true;
                 setState(() {
-                  _file = video;
+                  _file = File(video.path);
                 });
               }
             },
@@ -127,11 +127,11 @@ class _MyAppState extends State<MyApp> {
             icon: Icon(Icons.folder),
             onPressed: () async {
               var video =
-                  await ImagePicker.pickVideo(source: ImageSource.gallery);
+                  await ImagePicker().pickVideo(source: ImageSource.gallery);
               if (video != null) {
                 isClickVideo = true;
                 setState(() {
-                  _file = video;
+                  _file = File(video.path);
                 });
               }
             },
@@ -144,47 +144,35 @@ class _MyAppState extends State<MyApp> {
   Widget _buildSaveToAlbumButton() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: RaisedButton(
-        color: Colors.blue,
-        textColor: Colors.white,
+      child: ElevatedButton(
         child: Text("Save to album"),
         onPressed: () async {
           setState(() {
             _isSaving = true;
           });
-          if (_file != null) {
-            if (await canReadStorage()) {
-              bool isSuccess = await RAlbum.saveAlbum(
-                "MyTestAlbum",
-                [_file.path, _file.path],
-              );
-              print('保存图片到相册是否成功：$isSuccess');
-              setState(() {
-                _isSaving = false;
-              });
-            }
-          } else {
+          if (await canReadStorage()) {
+            bool? isSuccess = await RAlbum.saveAlbum(
+              "MyTestAlbum",
+              [_file!.path, _file!.path],
+            );
+            print('保存图片到相册是否成功：$isSuccess');
             setState(() {
               _isSaving = false;
             });
           }
-        },
+                },
       ),
     );
   }
 
   Future<bool> canReadStorage() async {
     if (Platform.isIOS) return true;
-    var status = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.storage);
+    var status = await Permission.storage.status;
     if (status != PermissionStatus.granted) {
-      var future = await PermissionHandler()
-          .requestPermissions([PermissionGroup.storage]);
-      for (final item in future.entries) {
-        if (item.value != PermissionStatus.granted) {
+      var future = await Permission.storage.request();
+        if (future != PermissionStatus.granted) {
           return false;
         }
-      }
     } else {
       return true;
     }
@@ -194,16 +182,14 @@ class _MyAppState extends State<MyApp> {
   Widget _buildCreateAlbumButton() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: RaisedButton(
-        color: Colors.blue,
-        textColor: Colors.white,
+      child: ElevatedButton(
         child: Text("Create a album named MyTestAlbum"),
         onPressed: () async {
           if (await canReadStorage()) {
             setState(() {
               _isSaving = true;
             });
-            bool isSuccess = await RAlbum.createAlbum("MyTestAlbum");
+            bool? isSuccess = await RAlbum.createAlbum("MyTestAlbum");
             print('创建相册是否成功：$isSuccess');
             setState(() {
               _isSaving = false;
